@@ -1,0 +1,28 @@
+.h文件添加：
+		DockU^ mDockTester;//这个DockU就是粘连类
+		Form^ bfrm;
+	private: 
+	private: System::Void aaa_Move(System::Object^  sender, System::EventArgs^  e) ;
+	private: System::Void subfrmMove(Object^ sender, EventArgs^ e);
+.cpp文件添加：
+bfrm=gcnew bbb();//初始化子窗体对象
+	bfrm->Move += gcnew EventHandler(this, &aaa::subfrmMove);//在主窗体定义子窗体的移动事件
+
+	this->AddOwnedForm(bfrm);
+
+	bfrm->Show();
+
+	mDockTester = gcnew DockU(this);
+	mDockTester->isEnabled = true;
+	mDockTester->position = DockU::Position::MiddleRight;
+	mDockTester->process(bfrm);
+}
+System::Void aaa::aaa_Move(System::Object^ sender, System::EventArgs^ e)
+{
+	mDockTester->process(bfrm);//进行粘连
+}
+System::Void aaa::subfrmMove(Object^ sender, EventArgs^ e)
+{
+	if (ActiveForm == sender) {//这个要有，长城感觉应该是获取当前活动窗体
+		mDockTester->isDocked = false;//断开粘连
+	}
