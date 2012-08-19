@@ -1,1 +1,18 @@
 mfc-summary
+mfc summary
+*.ncb
+*.suo
+*.obj
+*.scc
+*.postbuild
+*.sdf
+*.suo
+*.opensdf
+*.unsuccessfulbuild
+
+*.tlog
+*.log
+*.metagen
+*.rar
+
+Debug
