@@ -1,0 +1,9 @@
+Void GF_Main::debugToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+	ToolStripMenuItem^ menuItem = (ToolStripMenuItem^) sender;
+	menuItem->Checked = !menuItem->Checked;
+	if (menuItem->Checked) {
+		ConsoleU::createConsole();
+	} else {
+		ConsoleU::releaseConsole();
+	}
+}
