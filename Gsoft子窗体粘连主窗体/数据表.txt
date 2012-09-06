@@ -1,0 +1,14 @@
+DataTable^ dtAddresses = gcnew DataTable(REG_ADDR_TABLE);
+	array<Object^, 2>^ columnsAddresses = gcnew array<Object^, 2>{
+		{ REG_ADDR_REG,			String::typeid },
+		{ REG_ADDR_VALUE,		String::typeid },
+		{ REG_ADDR_BIT_HIGH,	String::typeid },
+		{ REG_ADDR_BIT_LOW,		String::typeid },
+	};
+
+	Table::makeDataTable(dtAddresses, columnsAddresses);
+
+	ds->Tables->Add(dtAddresses);
+
+¡ÌÕ‚ªπ”–£∫
+Table::autoResize(mDataGridView, true);
