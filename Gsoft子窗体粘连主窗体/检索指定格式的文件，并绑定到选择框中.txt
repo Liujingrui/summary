@@ -1,0 +1,8 @@
+for each (String^ dir in mBinDirs) {
+		array<String^>^ files = FileU::getFiles(dir, "*.bin", true);
+		for each (String^ file in files) {
+			comboBox_BinFile->Items->Add(file);
+		}
+	}
+
+//ע�⣺List<String^>^ mBinDirs;
