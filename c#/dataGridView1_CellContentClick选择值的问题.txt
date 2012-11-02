@@ -1,0 +1,33 @@
+ 先设置datagridview的属性SelectionMode为FullRowSelect否则dataGridView1.SelectedRows[0].Cells[2].Value.ToString()和dataGridView1.SelectedCells[2].Value.ToString();不能用。
+
+【
+其他的如dataGridView1 .Rows[e.RowIndex ].Cells [0].Value可以用例如：
+private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            MessageBox.Show(dataGridView1 .Rows[e.RowIndex ].Cells [0].Value .ToString () );
+        }
+】
+
+第一：private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+ 
+        {
+           dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString() 
+         和dataGridView1.SelectedRows[0].Cells[2].Value.ToString()
+         和Convert.ToString(dataGridView1[2, dataGridView1.CurrentCell.RowIndex].Value).Trim();
+         和dataGridView1.SelectedCells[2].Value.ToString();是相等的
+        }
+第二：
+      private void 修改ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            只能用dataGridView1.SelectedRows[0].Cells[2].Value.ToString()
+            或者Convert.ToString(dataGridView1[2,dataGridView1.CurrentCell.RowIndex].Value).Trim();
+
+            或者dataGridView1.CurrentRow.Cells["roleName"].Value.ToString()
+            或者dataGridView1.SelectedCells[2].Value.ToString();
+            不能用dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString()
+        }
+
+
+
+第三：或者当前点击的单元格
+dataGridView1 .CurrentCell .Value.ToString()
