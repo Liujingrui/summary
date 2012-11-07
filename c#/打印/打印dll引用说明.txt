@@ -1,0 +1,103 @@
+       
+【请参考长城开发的soc_nds_csharp程序】
+引用命名空间：
+using GoldPrinter;
+
+
+ #region 打印方法调用
+        //打印浏览
+        private void tsbPrintPreview_Click(object sender, EventArgs e)
+        {
+            Print(false);
+        }
+        //页面设置
+        private void tsbPageSetup_Click(object sender, EventArgs e)
+        {
+            misGoldPrinter.PageSetup();
+
+        }
+        //打印
+        private void tsbPrint_Click(object sender, EventArgs e)
+        {
+            Print(true);
+        }
+
+
+        //*****第一步*****：申明并实例化，可用带参构造函数指明默认横向显示/打印。
+        //命名空间是using GoldPrinter;
+        private GoldPrinter.MisGoldPrinter misGoldPrinter = new GoldPrinter.MisGoldPrinter(true);
+
+        /// <summary>
+        /// 打印方法
+        /// </summary>
+        /// <param name="p_PrintOrPreview"></param>
+        private void Print(bool p_PrintOrPreview)
+        {
+            //*****第二步*****：直接赋值给打印对象(可选)
+            //misGoldPrinter.Title = "直播星生产线工位操作和数据库管理\nchangchengxue@gmail.com";							//主标题（C#用\n表示换行）	
+            misGoldPrinter.Title = "直播星生产线工位操作和数据库管理";							//主标题（C#用\n表示换行）	
+            //misGoldPrinter.Caption = "　　——qq:765650886，有问题请联系CC.XUE";										//副标题
+            misGoldPrinter.Top = "作者：薛长城|2012-10-25|版本：V1.0";										//抬头，一行三列的文字说明，用|分隔
+            misGoldPrinter.Bottom = "打印直播星数据||打印日期：" + System.DateTime.Now.ToLongDateString();	//结尾，说明同抬头
+
+
+            //*****第三步*****：打印重点，设置数据 源
+            //可以是一维数组、二维数组、DataGrid(DataGridView和DataGrid不同，它需要转换成二维数组）、DataTable、ListView、MshFlexGrid、HtmlTable...，
+            //总之，不支持的你自己写一个函数转换成二维数组赋给DataSource一切搞定
+            string[,] array = HDIC_Func.ToStringArray(dataGridView1, true);
+            if (array == null) { misGoldPrinter.DataSource = ""; }
+            else { misGoldPrinter.DataSource = array; }	//DataGrid作为数据源
+           
+
+            Body body = new Body();
+            body.ColsAlignString = "CRLL";						//由左中右第一个字母组成，对应于每列的对对齐方式
+
+           #region 网格标题（多层表头，符合中国人习惯），可选
+            //MultiHeader multiHeader = new MultiHeader(1, 4);			//两行6列的要合并分类说明的表头，如果只是单行表头且只要占用一行高度，用new MultiHeader(1,6)并用SetText赋值即可
+            //multiHeader.SetText(0, 0, "ChipID");
+            //multiHeader.SetText(0, 1, "CAID");
+            //multiHeader.SetText(0, 2, "STBID");
+            //multiHeader.SetText(0, 3, "生产时间");
+
+            //multiHeader.ColsWidth = new int[] {240,210,200,200};			//指定每页列宽，因为是Body明细的列标题，所以明细的列宽和它设置一样。当然，你也可以不做明细的列标题
+            //misGoldPrinter.MultiHeader = multiHeader;
+           #endregion
+
+            //misGoldPrinter.RowsPerPage = 20;				//可以指定每页打印的行数，默认自适应
+            //misGoldPrinter.BackColor = Color.Red;	//背景色
+            //((GoldPrinter.Top)(misGoldPrinter.Top)).IsDrawAllPage = false;		//可以设置是否每页都打印，页顶、页头默认第一页打印，而页脚与页底默认最后一页打印
+
+            //misGoldPrinter.IsSubTotalPerPage = true;				//这是打印本页小计
+            //misGoldPrinter.SubTotalColsList = (mcols - 2).ToString() + ";" + (mcols - 1).ToString();		//用分号分隔的要求小计的列				
+
+            #region 装订线（可选）
+            //Sewing sewing = new Sewing(20, SewingDirectionFlag.Left);	//左装订，边距为20个显示单位
+            //misGoldPrinter.Sewing = sewing;
+            //misGoldPrinter.IsSewingLine = true;							//打印装订线		
+            #endregion	
+
+            //打印的核心是Body，可以对它设置字体、列宽等等
+            ((GoldPrinter.Body)(misGoldPrinter.Body)).IsAverageColsWidth = true;//指明平均列宽
+
+            //*****第四步*****：打印或预览			
+            if (p_PrintOrPreview)
+            {
+                misGoldPrinter.Print();											//打印
+            }
+            else
+            {
+                misGoldPrinter.Preview();										//预览
+            }
+        }
+
+        //关闭窗体
+        private void frmPrint_Closed(object sender, System.EventArgs e)
+        {
+            //*****第五步*****：用完释放
+            misGoldPrinter.Dispose();
+            misGoldPrinter = null;
+        }
+
+        #endregion
+
+

@@ -1,0 +1,30 @@
+使C#程序脱离.net框架运行(非飞信方式) 使C#程序脱离.net框架运行(非飞信方式)
+这几天看了很多关于脱离框架运行C#程序的文章，千篇一律，都是讲飞信方案的，此方案涉及一些法律问题，只能自己研究一下，后来用google美国网站搜了一把，看了些文章，无意中发现mono，又用mono关键字到google中国搜了一把，已经有人实现控制台程序脱离.net框架了。
+
+其实就是换mono的公共语言运行时来使用。这样做的好处是体积小，发布免安装。首先，您需要下载mono的最新版。http://ftp.novell.com/pub/mono/archive/1.9.1/windows-installer/2/mono-1.9.1-gtksharp-2.10.4-win32-2.exe，安装后，就可以继续进行了。
+
+
+1、用Visual Studio创建一个Windows应用程序，假设叫做WinApp，并添加一个按钮。
+
+2、编译此项目，得到一个WinApp.exe文件。
+
+
+3、自己建立一个文件夹WinApp，其中再建立bin和lib这两个文件夹
+
+4、将mono安装文件夹中的bin和lib子文件夹中需要的文件拷贝至刚才建立的那两个文件夹。mono的默认安装位置是：C:\Program Files\Mono-1.9.1
+
+5、将需要运行的exe文件放入WinApp文件夹。
+
+
+6、调用，可以使用bat批处理来调用，bin\mono.exe WinApp.exe。(其实写个VC++的小程序调用最好，可以我没学过VC++)
+
+好了，发个代码上来，有兴趣的朋友可以研究一下，7zip打包后仅3.26MB，却实现了免安装微软庞大的框架。此测试项目我在纯净的虚拟机和本机均测试过，但有个bug，mono对中文路径支持不好，如若有中文路径，则无法运行。我后来又试了用C:\Program Files\Mono-1.9.1\bin\mono.exe来执行，则没有中文路径问题。我觉得缺少了哪个文件，一个一个试着拷贝到WinApp文件夹中，再用批处理来执行，还是错误。后来干脆将整个安装目录的文件全搬到WinApp目录中，执行批处理还是失败，可是用C:\Program Files\Mono-1.9.1\bin\mono.exe来执行就是能成功，百思不得其解啊！究竟少了什么东西呢？
+
+博客园单个文件限制在了1.95MB，我试了好多次不成功，大家到我的CSDN上下载吧，0分资源。
+
+
+http://download.csdn.net/source/661248
+
+
+
+出处：http://www.cnblogs.com/Daylight/archive/2008/10/02/1303037.html 
