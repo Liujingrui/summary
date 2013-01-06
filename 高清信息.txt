@@ -2,5 +2,5 @@ http://mail.hdigroup.cn/ 这是企业邮箱
 
 //--------------------下面是EVB程序中中频公式
 低中频时NCO = (IF/ Fs )*(2^23)
-正常中频时NCO = ((IF - Fs)/ Fs)*(2^23)
+正常中频时NCO = (min|IF - Fs|/ Fs)*(2^23)
 
